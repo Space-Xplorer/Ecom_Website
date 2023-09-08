@@ -3,7 +3,6 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 import express from'express'
-import colors from'colors'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
 import connectDB from './config/db.js'
@@ -47,5 +46,5 @@ const PORT=process.env.PORT;
 
 
 app.listen(PORT,()=>{
-  console.log(`Server Running on ${PORT}`.bgCyan.white)
+  console.log(`Server Running on ${PORT}`)
 })
