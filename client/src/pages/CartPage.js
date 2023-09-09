@@ -12,8 +12,7 @@ function CartPage() {
     const navigate=useNavigate();
     const [auth,setAuth]=useAuth();
     const [cart,setCart]=useCart();
-    const [orderId,setOrderId]=useState('')
-    const [buttonLabel, setButtonLabel] = useState('Pay with Razorpay');
+
     const [paymentId,setPaymentId]=useState('')
     const [signature,setSignature]=useState('')
     const handlePaymentSuccess = (paymentResponse) => {
@@ -40,6 +39,8 @@ function CartPage() {
             console.log(error);
         }
     }
+
+    // console.log(totalPrice())
 
 
     const removeCartItems= async (pid)=>{
@@ -92,8 +93,8 @@ function CartPage() {
                     }
                 },
                 prefill: {
-                    name: "Gaurav Kumar",
-                    email: "gaurav.kumar@example.com",
+                    name: "Pranav",
+                    email: "@bachupally",
                     contact: "9000090000"
                 },
                 notes: {

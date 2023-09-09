@@ -4,7 +4,7 @@ import AdminMenu from './../../components/Layout/AdminMenu';
 import toast from "react-hot-toast";
 import axios  from 'axios';
 import CategoryForm from '../../components/Form/CategoryForm';
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
 
 function CreateCategory() {
 
@@ -77,7 +77,7 @@ const handleDelete= async (pslug)=>{
   const getAllCategory=async()=>{
       try{
        
-        const {data}= await axios.get(`${process.env.REACT_APP_API}/api/v1/category/categories`)
+        const {data}= await axios.get(`/api/v1/category/categories`)
 
         if(data?.success){
           setCategories(data?.categories);
@@ -111,9 +111,9 @@ const handleDelete= async (pslug)=>{
     </tr>
   </thead>
   <tbody>
-  {categories?.map((Obj)=> (
+  {categories?.map((Obj,ind)=> (
   <>
-    <tr key={Obj._id}>
+    <tr key={ind}>
       <td>{Obj.name}</td>
       <td>
           <button className='btn btn-primary ms-2' onClick={()=>{

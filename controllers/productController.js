@@ -365,6 +365,7 @@ export const productCategoryController = async (request,response)=>{
 export const RazorPaymentController = async (request, response) => {
 
   const {amount}=request.body;
+  console.log(amount);
     try{
       const options = {
         amount: amount*100,  // amount in the smallest currency unit

@@ -1,7 +1,6 @@
 import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import paymentModel from '../models/paymentModel.js'
 import JWT from "jsonwebtoken";
-import slugify from "slugify";
 import userModel from "../models/userModel.js";
 export const registerController = async (request, response) => {
   try {
