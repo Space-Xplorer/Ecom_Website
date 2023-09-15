@@ -1,1 +1,1 @@
-# E-commerce-website
+Welcome to eCommerce Hub, your destination for online shopping. Explore a vast selection of products, enjoy secure transactions, and experience hassle-free browsing. Elevate your shopping journey with us today.
