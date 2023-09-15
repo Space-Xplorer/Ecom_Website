@@ -1,6 +1,5 @@
 import React from 'react'
 import { NavLink,Link } from 'react-router-dom'
-import {GiShoppingBag} from 'react-icons/gi'
 import { useAuth } from '../../context/auth'
 import  toast  from 'react-hot-toast'
 import SearchForm from '../Form/SearchForm'
@@ -30,7 +29,7 @@ function Header() {
     </button>
     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
       <Link to="/" className="navbar-brand">
-       <GiShoppingBag/> Ecommerce app
+       <img src='./favicon.ico'></img> Ecommerce app
       </Link>
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
         <SearchForm/> 
