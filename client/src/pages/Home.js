@@ -158,7 +158,7 @@ useEffect(()=>{
            </div>
            <div className='col-md-10' >
             {/* {JSON.stringify(radio,null,4)} */}
-            <h1 className='text-center'> ALL Products </h1>
+            <h1 className='text-center m-5'> ALL Products </h1>
             <div className='d-flex flex-wrap'>
               {products?.map((Obj,i)=>(
                     
@@ -179,10 +179,10 @@ useEffect(()=>{
                 </div>
                 
                 ))}
-
+          
             </div>
             <div>
-              <div className='m-2 p-3'>
+              <div className='m-10 p-3'>
                   {products && products.length<total && (
                     <button className='btn btn-warning' 
                     onClick={(e)=> {
