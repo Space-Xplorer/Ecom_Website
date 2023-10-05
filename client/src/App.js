@@ -30,8 +30,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/home' element={<NewHome/>} />
+        <Route path='/' element={<NewHome/>} />
+        <Route path='/shop' element={<Home/>} />
         <Route path='/search' element={<SearchPage/>} />
         <Route path='/product/:slug' element={<ProductDetails/>} />
         <Route path='/categories' element={<Categories/>} />

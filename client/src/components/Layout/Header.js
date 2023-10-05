@@ -54,7 +54,7 @@ function Header() {
   return (
     <nav className=" py-4 bg-stone-200 sticky top-0 backdrop-blur-2xl backdrop-filter bg-opacity-30">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/home" className="text-2xl font-bold text-brown flex">
+        <Link to="/" className="text-2xl font-bold text-brown flex">
           Artisans of <br/> Telangana
         </Link>
         <div className="flex items-center space-x-6">
@@ -83,11 +83,11 @@ function Header() {
             </form>
           </div>
           
-          {window.location.pathname !== '/' && 
+          {window.location.pathname === '/' && 
             <div className="flex items-center space-x-4">
               <span
                 className="cursor-pointer bg-amber-400 backdrop-filter backdrop-blur-3xl rounded-2xl bg-opacity-50 p-3"
-                onClick={(e)=>{e.preventDefault();navigate('/')}}
+                onClick={(e)=>{e.preventDefault();navigate('/shop')}}
               >
                 Buy Now!!
               </span>
