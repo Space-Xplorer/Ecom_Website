@@ -1,93 +1,90 @@
-import React,{useState,useEffect} from 'react'
-import Layout from '../../components/Layout/Layout'
+import React, { useState, useEffect } from 'react';
+import Layout from '../../components/Layout/Layout';
 import UserMenu from './../../components/Layout/UserMenu';
-import  axios  from 'axios';
+import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import moment from 'moment';
-import '../../styles/OrderStyles.css';
+
 function Orders() {
-  const [auth,setAuth]=useAuth()
-  const [orders,setOrders]=useState([])
-  const getOrders= async ()=>{
-    try{
-      const {data}=await axios.get('/api/v1/auth/orders')
-      setOrders(data.orders)
-    }catch(error){
+  const [auth, setAuth] = useAuth();
+  const [orders, setOrders] = useState([]);
+
+  const getOrders = async () => {
+    try {
+      const { data } = await axios.get('/api/v1/auth/orders');
+      setOrders(data.orders);
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  useEffect(()=>{
-    if(auth?.token)
-        getOrders();
-  },[auth?.token]) 
+  useEffect(() => {
+    if (auth?.token) getOrders();
+  }, [auth?.token]);
+
   return (
     <Layout title={'Dashboard-Orders'}>
-    <div className='container-fluid m-3 p-3'>
-      <div className='row'>
-          <div className='col-md-3'>
-            <UserMenu/>
+      <div className='container mx-auto p-4'>
+        <div className='md:flex'>
+          {/* User Menu (Sidebar) */}
+          <div className='md:w-1/4'>
+            <UserMenu />
           </div>
-          <div className='col-md-9'>
-          <h1 className='text-center'>Orders</h1>
-          {
-            orders?.map((o,i) =>{
-              return(
-                <div className='border shadow mb-4' >
-                   <table className='table'>
-                      <thead>
-                        <tr>
-                           <th scope='col'>#</th>
-                           <th scope='col'>status</th>
-                           <th scope='col'>Buyer</th>
-                           <th scope='col'>Date</th>
-                           <th scope='col'>Payment</th>
-                           <th scope='col'>Quantity</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{i+1}</td>
-                          <td>{o?.status}</td>
-                          <td>{o?.buyer?.name}</td>
-                          <td>{moment(o?.createdAt).fromNow()}</td>
-                          <td>{o?.razorpay_payment_id? "Success" : "Failed"}</td>
-                          <td>{o?.products.length}</td>
-                        </tr>
-                      </tbody>
-                   </table>
-                   <div>
-                    {
-        
-                        o?.products.map((Obj,index)=>(
-                        <div key={index} className='row mb-2 p-3 card flex-row pcard'>
-                            <div className='col-md-4'>
-                            <img src={`/api/v1/product/get-photo/${Obj._id}`} 
-                            className="card-img-top" 
-                            alt={Obj.name} 
-                            />
-                            </div>
-                            <div className='col-md-8 product-details'>
-                                <p className='product-name'>{Obj.name}</p>
-                                <p className='product-description'>{Obj.description.substr(10)}</p>
-                                <p className='product-price'>{Obj.price}</p>
 
-                            </div>
+          {/* Orders List */}
+          <div className='md:w-3/4'>
+            <h1 className='text-3xl font-semibold mb-6 text-center'>Orders</h1>
+            {orders?.map((o, i) => {
+              return (
+                <div className='border shadow-lg mb-4' key={i}>
+                  <table className='table w-full'>
+                    <thead>
+                      <tr>
+                        <th className='py-2'>#</th>
+                        <th className='py-2'>Status</th>
+                        <th className='py-2'>Buyer</th>
+                        <th className='py-2'>Date</th>
+                        <th className='py-2'>Payment</th>
+                        <th className='py-2'>Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className='text-center'>{i + 1}</td>
+                        <td className='text-center'>{o?.status}</td>
+                        <td className='text-center'>{o?.buyer?.name}</td>
+                        <td className='text-center'>{moment(o?.createdAt).fromNow()}</td>
+                        <td className='text-center'>{o?.razorpay_payment_id ? 'Success' : 'Failed'}</td>
+                        <td className='text-center'>{o?.products.length}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div>
+                    {o?.products.map((Obj, index) => (
+                      <div key={index} className='row mb-2 p-3 card flex-row'>
+                        <div className='col-md-4'>
+                          <img
+                            src={`/api/v1/product/get-photo/${Obj._id}`}
+                            className='card-img-top'
+                            alt={Obj.name}
+                          />
                         </div>
-                        )
-                    )
-                      
-                    }
-                   </div>
+                        <div className='col-md-8'>
+                          <p className='font-semibold text-lg'>{Obj.name}</p>
+                          <p className='text-gray-700'>{Obj.description.substr(10)}</p>
+                          <p className='text-green-600 font-semibold'>{Obj.price}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              )
-            })
-          }
+              );
+            })}
           </div>
         </div>
-    </div> 
-  </Layout>
-  )
+      </div>
+    </Layout>
+  );
 }
 
-export default Orders
+export default Orders;

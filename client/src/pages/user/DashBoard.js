@@ -1,28 +1,39 @@
-import React from 'react'
+import React from 'react';
 import Layout from './../../components/Layout/Layout';
 import UserMenu from './../../components/Layout/UserMenu';
 import { useAuth } from '../../context/auth';
-function DashBoard() {
 
-  let [auth,setAuth]=useAuth();
+function Dashboard() {
+  const [auth, setAuth] = useAuth();
+
   return (
     <Layout title={'Dashboard - Ecommerce'}>
-       <div className='container-fluid m-3 p-3'>
-          <div className='row'>
-            <div className='col-md-3'>
-              <UserMenu/>
-            </div>
-            <div className='col-md-9'>
-              <div className='card w-75 p-3 '>
-                  <h4>User  Name: {auth?.user?.name}</h4>
-                  <h4>Admin Email: {auth?.user?.email}</h4>
-                  <h4>Admin contact: {auth?.user?.phone}</h4>
+      <div className="container mx-auto p-4 md:p-8">
+        <div className="md:flex">
+          {/* User Menu (Sidebar) */}
+          <div className="md:w-1/4">
+            <UserMenu />
+          </div>
+
+          {/* User Info */}
+          <div className="md:w-3/4">
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <h2 className="text-3xl font-semibold mb-6">User Information</h2>
+              <div className="mb-4">
+                <strong className="text-xl">User Name:</strong> {auth?.user?.name}
+              </div>
+              <div className="mb-4">
+                <strong className="text-xl">User Email:</strong> {auth?.user?.email}
+              </div>
+              <div className="mb-4">
+                <strong className="text-xl">User Contact:</strong> {auth?.user?.phone}
               </div>
             </div>
           </div>
         </div>
+      </div>
     </Layout>
-  )
+  );
 }
 
-export default DashBoard
+export default Dashboard;

@@ -3,8 +3,6 @@ import { useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 import React, { useState } from "react";
 import Layout from "./../../components/Layout/Layout";
-//import {toast} from 'react-toastify' 
-import "../../styles/AuthStyles.css";
 
 
 function ForgotPassword() {

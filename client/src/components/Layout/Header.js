@@ -1,117 +1,152 @@
-import React from 'react'
-import { NavLink,Link } from 'react-router-dom'
-import { useAuth } from '../../context/auth'
-import  toast  from 'react-hot-toast'
-import SearchForm from '../Form/SearchForm'
-import useCategory from '../../hooks/useCategory'
-import { useCart } from '../../context/Cart'
-import {Badge} from 'antd'
-import "../../styles/Headers.css"
+import React, { useState } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auth";
+import toast from "react-hot-toast";
+import useCategory from "../../hooks/useCategory";
+import { useCart } from "../../context/Cart";
+import { Badge } from "antd";
+import { useSearch } from "../../context/Search";
+import axios from "axios";
+
 function Header() {
-  const categories=useCategory();
-  const [cart]=useCart();
-  const [auth,setAuth]=useAuth()
-  const handlelogout=()=>{
+  const navigate = useNavigate();
+  const [values, setValues] = useSearch();
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const toggleProfile = () => {
+    setIsProfileOpen(!isProfileOpen);
+    setIsCategoriesOpen(false);
+  };
+
+  const closeDropdowns = () => {
+    setIsCategoriesOpen(false);
+    setIsProfileOpen(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.get(
+        `/api/v1/product/search/${values.keyword}`
+      );
+      setValues({ ...values, results: data });
+      navigate("/search");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const categories = useCategory();
+  const [cart] = useCart();
+  const [auth, setAuth] = useAuth();
+
+  const handleLogout = () => {
     setAuth({
       ...auth,
-      user:null,
-      token:"",
-    })
-    localStorage.removeItem('auth');
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth");
     toast.success("Logout Successful");
-}
+  };
+
   return (
-    <> 
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-  <div className="container-fluid">
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon" />
-    </button>
-    <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <Link to="/" className="navbar-brand">
-       <img src='./favicon.ico'></img> Ecommerce app
-      </Link>
-      <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-        <SearchForm/> 
-        <li className="nav-item">
-          <NavLink to="/" className="nav-link ">Home</NavLink>
-        </li>
-
-        <li className="nav-item dropdown">
-        <Link 
-        className="nav-link dropdown-toggle"  
-        data-bs-toggle="dropdown"
-        >
-          Categories
-      </Link>
-  <ul className="dropdown-menu">
-  <li>
-      <Link to={`/categories`} className="dropdown-item" href="#">
-      All Categories
-      </Link>
-    </li>
-  {categories?.map(c=>(
-     
-     <li key={c._id}>
-      <Link  to={`/category/${c.slug}`} className="dropdown-item" >
-      {c.name}
-      </Link>
-    </li>
-     
-  ))}
-  </ul>
-        </li>
-
-        <li className="nav-item">
-        </li>
-        {
-          !auth.user ? (<>
-          <li className="nav-item">
-          <NavLink to="/register" className="nav-link">
-            Register
-          </NavLink>
-          </li> 
-          <li className="nav-item">
-          <NavLink  to="/login" className="nav-link" >
-            Login
-          </NavLink>
-          </li>
-          </>) : (<>
-           <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-           {auth?.user.name}
-          </a>
-          <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <NavLink to={`/dashboard/${auth?.user?.role === 1 ? 'admin' : 'user' }`} className="dropdown-item" href="#">
-                  Dashboard
-                </NavLink>
-              </li>
-              <li>
-                  <NavLink onClick={handlelogout}  to="/login" className="dropdown-item" >
-                        Logout 
+    <nav className=" py-4 bg-stone-200 sticky top-0 backdrop-blur-2xl backdrop-filter bg-opacity-30">
+      <div className="container mx-auto flex justify-between items-center">
+        <Link to="/home" className="text-2xl font-bold text-brown flex">
+          Artisans of <br/> Telangana
+        </Link>
+        <div className="flex items-center space-x-6">
+          <div className="relative">
+            <form
+              className="flex items-center"
+              role="search"
+              onSubmit={handleSubmit}
+            >
+              <input
+                className="w-48 sm:w-64 px-4 py-2 bg-white border rounded-full focus:outline-none focus:ring focus:border-blue-300"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                value={values.keyword}
+                onChange={(e) =>
+                  setValues({ ...values, keyword: e.target.value })
+                }
+              />
+              <button
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 ml-2 rounded-full focus:outline-none"
+                type="submit"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+          
+          {window.location.pathname !== '/' && 
+            <div className="flex items-center space-x-4">
+              <span
+                className="cursor-pointer bg-amber-400 backdrop-filter backdrop-blur-3xl rounded-2xl bg-opacity-50 p-3"
+                onClick={(e)=>{e.preventDefault();navigate('/')}}
+              >
+                Buy Now!!
+              </span>
+            </div>}
+          
+          {!auth.user ? (
+            <div className="flex items-center space-x-4">
+              <span
+                className="text-brown cursor-pointer hover:underline p-3"
+                onClick={(e)=>{e.preventDefault();navigate('/login')}}
+              >
+                Register / Login
+              </span>
+            </div>
+          ) : (
+            <div className="relative group" onBlur={closeDropdowns}>
+              <span
+                className="text-brown cursor-pointer hover:underline"
+                onClick={toggleProfile}
+              >
+                {auth?.user.name}
+              </span>
+              {isProfileOpen && (
+                <ul className="absolute mt-2 space-y-2 bg-white border border-gray-200 rounded-lg py-2">
+                  <li>
+                    <NavLink
+                      to={`/dashboard/${
+                        auth?.user?.role === 1 ? "admin" : "user"
+                      }`}
+                      className="hover:underline p-3"
+                    >
+                      Dashboard
                     </NavLink>
-              </li> 
-        </ul>
-          </li>
-
-
-           </>)
-        }
-        <li className="nav-item">
-        <Badge count={cart.length}>
-        <NavLink to="/cart" className="nav-link">
-          Cart
-        </NavLink>
-        </Badge>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-    </>
-  )
+                  </li>
+                  <li>
+                    <NavLink
+                      onClick={handleLogout}
+                      to="/login"
+                      className="hover:underline p-3"
+                    >
+                      Logout
+                    </NavLink>
+                  </li>
+                </ul>
+              )}
+            </div>
+          )}
+          <Badge count={cart.length} className="cursor-pointer">
+            <NavLink to="/cart" className="text-brown hover:underline">
+              Cart
+            </NavLink>
+          </Badge>
+        </div>
+        <button className="md:hidden">
+        </button>
+      </div>
+    </nav>
+  );
 }
 
-export default Header
+export default Header;
+

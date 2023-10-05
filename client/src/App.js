@@ -8,7 +8,6 @@ import {Routes,Route} from 'react-router-dom'
 import Register from './pages/Auth/Register'
 import Login from './pages/Auth/Login'
 import DashBoard from './pages/user/DashBoard'
-import './App.css';
 import PrivateRoute from './components/Layout/Routes/Private';
 import ForgotPassword from './pages/Auth/ForgotPassword'
 import AdminRoute from './components/Layout/Routes/AdminRoute'
@@ -23,15 +22,16 @@ import ProductUpdate from './pages/Admin/ProductUpdate';
 import SearchPage from './pages/SearchPage';
 import ProductDetails from './pages/ProductDetails';
 import Categories from './pages/Categories';
-import CategoryProducts from './pages/CategoryProducts';
 import CartPage from './pages/CartPage';
 import AdminOrders from './pages/Admin/AdminOrders';
+import NewHome from './pages/NewHome'
 
 function App() {
   return (
     <>
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path='/home' element={<NewHome/>} />
         <Route path='/search' element={<SearchPage/>} />
         <Route path='/product/:slug' element={<ProductDetails/>} />
         <Route path='/categories' element={<Categories/>} />

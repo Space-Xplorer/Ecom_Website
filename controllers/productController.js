@@ -37,11 +37,11 @@ export const createProductController = async (request, response) => {
       return response
         .status(500)
         .send({ success: false, message: "Quantity is required" });
-    if (photo && photo.size > 1000000)
-      return response.status(500).send({
-        success: false,
-        message: "Photo is required and its size must be less than 1MB",
-      });
+    // if (photo && photo.size > 1000000)
+    //   return response.status(500).send({
+    //     success: false,
+    //     message: "Photo is required and its size must be less than 1MB",
+    //   });
 
     const product = await new productModel({
       ...request.fields,
@@ -222,6 +222,7 @@ export const filterProductController = async (request, response) => {
     if (checked.length > 0) {
       args.category = checked;
     }
+    console.log(radio);
     if (radio.length) {
       args.price = { $gte: radio[0], $lte: radio[1] };
     } 
@@ -260,7 +261,7 @@ export const productCountController = async (request, response) => {
 export const productPageController = async (request, response) => {
   try {
     const page = request.params.page ? request.params.page : 1;
-    const itemsPerPage = 3;
+    const itemsPerPage = 9;
     const products = await productModel
       .find({})
       .select("-photo")

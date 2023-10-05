@@ -1,12 +1,11 @@
 import React from 'react';
 import Layout from '../components/Layout/Layout';
 import { FaEnvelope, FaPhoneAlt, FaRegLifeRing } from 'react-icons/fa';
-import '../styles/AboutStyles.css'; // Import the stylesheet for About Us page
 
 const About = () => {
   return (
-    <Layout title={'About Us'}>
-      <div className="row aboutus">
+    <Layout title={'About Us'} >
+      <div className="row aboutus min-h-full">
         <div className="col-md-6">
           <img
             src="/images/about-us-image.jpg"

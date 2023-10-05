@@ -1,82 +1,81 @@
 import axios from "axios";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import React, { useState } from "react";
 import Layout from "./../../components/Layout/Layout";
-import "../../styles/AuthStyles.css";
 import { useAuth } from "../../context/auth";
+
 function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-    const [auth,setAuth]=useAuth()
-    const location=useLocation();
-    const handleSubmit =async (e) => {
-        e.preventDefault();
-       try{
-          const res=await axios.post(`/api/v1/auth/login`,{email,password,});
-          if(res && res.data.success){
-            toast.success(res.data && res.data.message)
-            setAuth({
-              ...auth,
-              user:res.data.user,
-              token:res.data.token,
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [auth, setAuth] = useAuth();
+  const location = useLocation();
 
-            });
-            localStorage.setItem('auth',JSON.stringify(res.data));
-            navigate(location.state || "/");  
-          }else{
-            toast.error(res.data.message)
-          }
-    
-          }
-          catch(error){
-            console.log(error);
-            toast.error("Something Went Wrong")
-           }
-       }
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`/api/v1/auth/login`, { email, password });
+      if (res && res.data.success) {
+        toast.success(res.data && res.data.message);
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem('auth', JSON.stringify(res.data));
+        navigate(location.state || "/");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something Went Wrong");
+    }
+  };
 
   return (
-    <Layout title="Register - Ecommer App">
-      <div className="form-container" style={{ minHeight: "90vh" }}>
-        <form onSubmit={handleSubmit}>
-          <h4 className="title">LOGIN FORM</h4>
-          <div className="mb-3">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter Your Email "
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Enter Your Password"
-              required
-            />
-          </div>
-        
-          <div className="mb-3">
-          <button type="submit" className="btn btn-primary" onClick={()=>{navigate('/forgot-password')}}>
-            Forgot Password
-          </button> 
-          </div>
-          <button type="submit" className="btn btn-primary">
-            LOGIN
-          </button>
-        </form>
+    <Layout title="Login - Ecommerce App">
+      <div className="container mx-auto p-4">
+        <div className="max-w-md mx-auto bg-white rounded-lg p-6 shadow-lg">
+          <h2 className="text-2xl font-semibold mb-4 text-center text-indigo-600">LOGIN</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+                placeholder="Enter Your Email"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+                placeholder="Enter Your Password"
+                required
+              />
+            </div>
+            <div className="flex justify-between mb-4">
+              <button type="submit" className="w-2/5 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">
+                LOGIN
+              </button>
+              <Link to="/forgot-password" className="w-2/5 text-center text-indigo-600 hover:underline">
+                Forgot Password
+              </Link>
+            </div>
+            <div className="text-indigo-600 underline hover:cursor-pointer" onClick={(e)=>{e.preventDefault();navigate('/register')}}>
+              Aren't you already in? Register Now
+            </div>
+          </form>
+        </div>
       </div>
     </Layout>
-  )
+  );
 }
 
-export default Login
+export default Login;
