@@ -16,7 +16,7 @@ export const requireSignIn =async (request,response,next)=>{
 export const isAdmin = async (request,response,next)=>{
     try {
         const user = await userModel.findById(request.user._id)
-        if(user.role !==1) return response.status(401).send({
+        if(user.role !== 1) return response.status(200).send({
             success:false,
             massage:"User is unauthorized"
         })

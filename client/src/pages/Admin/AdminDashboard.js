@@ -2,12 +2,13 @@ import React from 'react';
 import AdminMenu from '../../components/Layout/AdminMenu';
 import { useAuth } from '../../context/auth';
 import Layout from './../../components/Layout/Layout';
+import AdminLayout from '../../components/Layout/AdminLayout';
 
 function AdminDashboard() {
   let [auth, setAuth] = useAuth();
 
   return (
-    <Layout>
+    <AdminLayout>
       <div className="container mx-auto mt-3 p-3">
         <div className="md:flex">
           {/* Admin Menu */}
@@ -32,7 +33,7 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
-    </Layout>
+    </AdminLayout>
   );
 }
 

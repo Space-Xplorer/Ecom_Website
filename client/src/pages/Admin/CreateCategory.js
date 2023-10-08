@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import axios from 'axios';
 import CategoryForm from '../../components/Form/CategoryForm';
 import { Modal } from 'antd';
+import AdminLayout from '../../components/Layout/AdminLayout';
 
 function CreateCategory() {
   const [categories, setCategories] = useState([]);
@@ -84,7 +85,7 @@ function CreateCategory() {
   }, []);
 
   return (
-    <Layout title={'Dashboard-create-category'}>
+    <AdminLayout title={'Dashboard-create-category'}>
       <div className='container mx-auto mt-3 p-3'>
         <div className='flex flex-wrap'>
           <div className='w-full md:w-1/4'>
@@ -136,7 +137,7 @@ function CreateCategory() {
           </div>
         </div>
       </div>
-    </Layout>
+    </AdminLayout>
   );
 }
 

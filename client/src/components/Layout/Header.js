@@ -114,9 +114,7 @@ function Header() {
                 <ul className="absolute mt-2 space-y-2 bg-white border border-gray-200 rounded-lg py-2">
                   <li>
                     <NavLink
-                      to={`/dashboard/${
-                        auth?.user?.role === 1 ? "admin" : "user"
-                      }`}
+                      to={`/dashboard/user`}
                       className="hover:underline p-3"
                     >
                       Dashboard

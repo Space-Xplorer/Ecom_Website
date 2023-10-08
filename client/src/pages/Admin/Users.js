@@ -3,6 +3,7 @@ import Layout from './../../components/Layout/Layout';
 import AdminMenu from './../../components/Layout/AdminMenu';
 import axios from 'axios';
 import moment from 'moment';
+import AdminLayout from '../../components/Layout/AdminLayout';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -21,7 +22,7 @@ function Users() {
   }, []);
 
   return (
-    <Layout title="All Users">
+    <AdminLayout title="All Users">
       <div className="container mx-auto py-6">
         <div className="md:flex">
           {/* Admin Menu */}
@@ -60,7 +61,7 @@ function Users() {
           </div>
         </div>
       </div>
-    </Layout>
+    </AdminLayout>
   );
 }
 

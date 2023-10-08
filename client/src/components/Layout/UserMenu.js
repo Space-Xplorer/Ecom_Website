@@ -11,7 +11,7 @@ function UserMenu() {
     <div className="md:w-1/4 min-w-fit">
       <div className="bg-gray-800 text-white min-w-fit">
         <div className="text-center md:text-left py-4 px-4 md:px-6 min-w-fit">
-          <h4 className="text-xl font-semibold min-w-fit">Admin Panel</h4>
+          <h4 className="text-xl font-semibold min-w-fit">User Panel</h4>
         </div>
         <div className="md:hidden text-right px-4 py-2">
           <button

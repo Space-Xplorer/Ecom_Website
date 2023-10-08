@@ -30,7 +30,7 @@ function AdminMenu() {
           <ul className="md:text-left list-none">
             <li>
               <NavLink
-                to="/dashboard/admin/create-category"
+                to="/admin-panel/create-category"
                 className="block py-2 px-4 hover:bg-gray-700"
                 activeClassName="bg-gray-700"
               >
@@ -39,7 +39,7 @@ function AdminMenu() {
             </li>
             <li>
               <NavLink
-                to="/dashboard/admin/create-product"
+                to="/admin-panel/create-product"
                 className="block py-2 px-4 hover:bg-gray-700"
                 activeClassName="bg-gray-700"
               >
@@ -48,7 +48,7 @@ function AdminMenu() {
             </li>
             <li>
               <NavLink
-                to="/dashboard/admin/products"
+                to="/admin-panel/products"
                 className="block py-2 px-4 hover:bg-gray-700"
                 activeClassName="bg-gray-700"
               >
@@ -57,7 +57,7 @@ function AdminMenu() {
             </li>
             <li>
               <NavLink
-                to="/dashboard/admin/orders"
+                to="/admin-panel/orders"
                 className="block py-2 px-4 hover:bg-gray-700"
                 activeClassName="bg-gray-700"
               >
@@ -66,7 +66,7 @@ function AdminMenu() {
             </li>
             <li>
               <NavLink
-                to="/dashboard/admin/users"
+                to="/admin-panel/users"
                 className="block py-2 px-4 hover:bg-gray-700"
                 activeClassName="bg-gray-700"
               >

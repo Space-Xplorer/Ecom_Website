@@ -6,6 +6,7 @@ import categoryModel from '../models/categoryModel.js';
 import crypto from "crypto";
 import dotenv from 'dotenv'
 import paymentModel from "../models/paymentModel.js";
+import userModel from "../models/userModel.js";
 dotenv.config();
 var instance = new Razorpay({
    key_id:process.env.BRAINTREE_MERCHANT_ID, 
@@ -429,6 +430,43 @@ export const fetchorders = async(request,response)=>{
   }catch(error){
     response.send({
       success:"false",
+    })
+  }
+}
+
+export const addToCartController = async (req,res)=>{
+  try {
+    const user = await userModel.findOne({_id:user._id});
+    const {cart} = req.body;
+    const map = new Map(); 
+    for(i of user.cart) map[i._id]=1;
+    for(i of cart) if(!map.has(i._id)) user.cart.push(i);
+    await user.save();
+    res.send({
+      success:true,
+      message:"Cart updated succesfully",
+      cart:user.cart
+    })
+  } catch (error) {
+    response.send({
+      success:"false",
+      message:"Addition to cart failed"
+    })
+  }
+}
+
+export const getCartController = async (req,res)=>{
+  try {
+    const user = await userModel.findOne({_id:user._id});
+    res.send({
+      success:true,
+      message:"Cart fetched succesfully",
+      cart:user.cart
+    })
+  } catch (error) {
+    response.send({
+      success:"false",
+      message:"Cart fetch failed"
     })
   }
 }

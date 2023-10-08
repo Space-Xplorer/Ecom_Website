@@ -1,9 +1,11 @@
 import express from "express";
 import formidable from "express-formidable";
 import {
+  addToCartController,
   createProductController,
   deleteProductController,
   filterProductController,
+  getCartController,
   getPhotoController,
   PaymentVerifyController,
   productCategoryController,
@@ -49,5 +51,7 @@ router.get('/:pid/:cid',similarProductsController);
 router.get('/getkey',(req,res)=>res.status(200).send({
   key:process.env.BRAINTREE_MERCHANT_ID,
 }))
+router.post('/add-to-cart',requireSignIn,addToCartController);
+router.post('/get-cart',requireSignIn,getCartController);
 
 export default router;

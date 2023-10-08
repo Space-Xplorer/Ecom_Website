@@ -4,6 +4,7 @@ import Layout from './../../components/Layout/Layout';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import AdminLayout from '../../components/Layout/AdminLayout';
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -25,7 +26,7 @@ function Products() {
   }, []);
 
   return (
-    <Layout>
+    <AdminLayout>
       <div className='container mx-auto mt-3 p-3'>
         <div className='md:flex md:flex-wrap'>
           {/* Admin Menu */}
@@ -55,7 +56,7 @@ function Products() {
           </div>
         </div>
       </div>
-    </Layout>
+    </AdminLayout>
   );
 }
 

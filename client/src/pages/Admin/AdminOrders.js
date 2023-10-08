@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import moment from 'moment';
 import { Select } from 'antd';
+import AdminLayout from '../../components/Layout/AdminLayout';
 
 const { Option } = Select;
 
@@ -40,7 +41,7 @@ const AdminOrders = () => {
   }
 
   return (
-    <Layout title={'All Orders Data'}>
+    <AdminLayout title={'All Orders Data'}>
       <div className='container mx-auto mt-3 p-3'>
         <div className='md:flex md:flex-wrap'>
           {/* Admin Menu */}
@@ -112,7 +113,7 @@ const AdminOrders = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </AdminLayout>
   )
 }
 

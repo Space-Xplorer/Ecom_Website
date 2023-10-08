@@ -2,6 +2,35 @@ import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import paymentModel from '../models/paymentModel.js'
 import JWT from "jsonwebtoken";
 import userModel from "../models/userModel.js";
+import { UniqueString } from "unique-string-generator";
+import nodemailer from 'nodemailer';
+
+const sendConformationMail = (email,uniqueString)=>{
+  const transport = nodemailer.createTransport({
+    service:"Gmail",
+    auth:{
+      user:process.env.MAILUSER,
+      pass: process.env.MAILPASS
+    }
+  });
+
+  const sender = "Artisans of Telangana"
+  const href = `http://localhost:3000/verify/${uniqueString}`
+  const mailOptions = {
+    from: sender,
+    to: email,
+    subject: "Email Confirmation",
+    html: `press <a href=${href}>Here</a> to verify your email. Team Artisans of Telangana with ❤️`
+  };
+
+  transport.sendMail(mailOptions,(error,resp)=>{
+    if(error) console.log(error);
+    else console.log("Message Sent");
+  })
+
+
+}
+
 export const registerController = async (request, response) => {
   try {
     const { name, email, password, phone, address, answer } = request.body;
@@ -30,19 +59,23 @@ export const registerController = async (request, response) => {
 
     // Register user
     const hashedPassword = await hashPassword(password);
+    const uniqueString = UniqueString();
     const user = await new userModel({ 
       name,
       email,
       phone,
       address,
       password: hashedPassword,
-      answer 
+      answer,
+      uniqueString,
+      isValid:0
     }).save();
     response.status(201).send({
       success: true,
       message: "User registered successfully",
       user,
     }); 
+    sendConformationMail(email,uniqueString);
   } catch (error) {
     console.log(error);
     response.status(500).send({
@@ -74,6 +107,13 @@ export const loginController = async (request, response) => {
       return response.status(200).send({
         success: false,
         message: "Invalid password",
+      });
+    }
+    const isValid = user.isValid;
+    if(!isValid){
+      return response.status(200).send({
+        success: false,
+        message: "Email not verified, kindly check your mail",
       });
     }
     const token = await JWT.sign({ _id: user._id }, process.env.JWT_KEY, {
@@ -233,5 +273,21 @@ export const getAllUsersController = async (request, response) => {
       message: "Error in fetching users",
       error,
     });
+  }
+}
+
+export const emailVerificationController = async(req,res)=>{
+  const {unqStr} = req.params;
+  const user = await userModel.findOne({uniqueString:unqStr})
+  if(user){
+    user.isValid = true;
+    await user.save();
+    res.send({
+      success:true,
+      message:"Email verified successfully"
+    })
+  }
+  else{
+    res.json("User not found");
   }
 }

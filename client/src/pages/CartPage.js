@@ -50,7 +50,7 @@ function CartPage() {
   // Razorpay payment
   const fetchData = async (amount) => {
     try {
-      if(!auth?.token) navigate('/login',)
+      if(!auth?.token) navigate('/login')
       const Obj = await axios.get('/api/v1/product/getkey');
       const { data } = await axios.post(`/api/v1/product/razorpay/payment`, {
         amount,

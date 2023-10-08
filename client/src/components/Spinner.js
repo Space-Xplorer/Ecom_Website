@@ -1,7 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import { useNavigate,useLocation } from 'react-router-dom'
+import { useAuth } from '../context/auth';
 function Spinner({path="login"}) {
-
+  const [auth,setAuth] = useAuth();
     const[count,setCount]=useState(3);
     const navigate=useNavigate();
     const location=useLocation();
@@ -9,7 +10,7 @@ function Spinner({path="login"}) {
         const interval=setInterval(()=>{
             setCount(count-1)
         },1000)
-        count === 0 && navigate(`/${path}`,{
+        count === 0 && navigate(`/${auth?.user?.role === 1 ? "admin-panel":path}`,{
           state:location.pathname
         })
         return ()=> clearInterval(interval)

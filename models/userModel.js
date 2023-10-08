@@ -29,6 +29,19 @@ const userSchema = new mongoose.Schema({
     role:{
         type:Number,
         default:0
+    },
+    isValid:{
+        type:Boolean,
+        default:0
+    },
+    uniqueString:{
+        type:String,
+        required:true
+    },
+    cart:{
+        type:Array,
+        default:[],
+        required:true
     }
 },{timestamps:true})
 //timestamps whenever new user is created the time at which it was created is also stored

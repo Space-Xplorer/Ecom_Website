@@ -5,6 +5,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Select } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
+import AdminLayout from '../../components/Layout/AdminLayout';
 const { Option } = Select;
 
 function ProductUpdate() {
@@ -103,7 +104,7 @@ function ProductUpdate() {
   }
 
   return (
-    <Layout title={'Dashboard-update-product'}>
+    <AdminLayout title={'Dashboard-update-product'}>
       <div className='container mx-auto mt-3 p-3'>
         <div className='md:flex md:flex-wrap'>
           {/* Admin Menu */}
@@ -243,7 +244,7 @@ function ProductUpdate() {
           </div>
         </div>
       </div>
-    </Layout>
+    </AdminLayout>
   )
 }
 
