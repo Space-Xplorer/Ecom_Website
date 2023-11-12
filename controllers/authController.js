@@ -15,7 +15,7 @@ const sendConformationMail = (email,uniqueString)=>{
   });
 
   const sender = "Artisans of Telangana"
-  const href = `http://localhost:3000/verify/${uniqueString}`
+  const href = `https://good-teal-caterpillar-shoe.cyclic.cloud/verify/${uniqueString}`
   const mailOptions = {
     from: sender,
     to: email,
