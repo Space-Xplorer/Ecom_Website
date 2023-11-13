@@ -72,12 +72,12 @@ export const registerController = async (request, response) => {
       uniqueString,
       isValid:0
     }).save();
+    sendConformationMail(email,uniqueString);
     response.status(201).send({
       success: true,
       message: "User registered successfully",
       user,
     }); 
-    sendConformationMail(email,uniqueString);
   } catch (error) {
     console.log(error);
     response.status(500).send({
