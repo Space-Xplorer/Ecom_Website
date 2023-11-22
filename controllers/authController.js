@@ -8,7 +8,6 @@ import nodemailer from 'nodemailer';
 const sendConformationMail = (email,uniqueString)=>{
   const transport = nodemailer.createTransport({
     service:"Gmail",
-    port:465,
     secure:true,
     auth:{
       user:process.env.MAILUSER,
@@ -24,12 +23,16 @@ const sendConformationMail = (email,uniqueString)=>{
     subject: "Email Confirmation",
     html: `press <a href=${href}>Here</a> to verify your email. Team Artisans of Telangana with ❤️`
   };
-
-  transport.sendMail(mailOptions,(error,resp)=>{
-    if(error) console.log(error);
-    else console.log("Message Sent");
-  })
-
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailData, (err, info) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log("Message Sent");
+      }
+    });
+  });
 
 }
 
