@@ -8,6 +8,7 @@ import nodemailer from 'nodemailer';
 const sendConformationMail = (email,uniqueString)=>{
   const transport = nodemailer.createTransport({
     service:"Gmail",
+    port: 465,
     secure:true,
     auth:{
       user:process.env.MAILUSER,
