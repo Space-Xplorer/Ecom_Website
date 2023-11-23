@@ -5,7 +5,7 @@ import userModel from "../models/userModel.js";
 import { UniqueString } from "unique-string-generator";
 import nodemailer from 'nodemailer';
 
-const sendConformationMail = (email,uniqueString)=>{
+const sendConformationMail =async (email,uniqueString)=>{
   const transport = nodemailer.createTransport({
     service:"Gmail",
     port: 465,
@@ -25,7 +25,7 @@ const sendConformationMail = (email,uniqueString)=>{
     html: `press <a href=${href}>Here</a> to verify your email. Team Artisans of Telangana with ❤️`
   };
   await new Promise((resolve, reject) => {
-    transporter.sendMail(mailData, (err, info) => {
+    transport.sendMail(mailData, (err) => {
       if (err) {
         console.error(err);
         reject(err);
