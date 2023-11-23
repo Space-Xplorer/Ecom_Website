@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     },
     isValid:{
         type:Boolean,
-        default:0
+        default:1
     },
     uniqueString:{
         type:String,
