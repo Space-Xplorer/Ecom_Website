@@ -74,9 +74,9 @@ export const registerController = async (request, response) => {
       password: hashedPassword,
       answer,
       uniqueString,
-      isValid:0
+      isValid:1
     }).save();
-    sendConformationMail(email,uniqueString);
+    // sendConformationMail(email,uniqueString);
     response.status(201).send({
       success: true,
       message: "User registered successfully",
