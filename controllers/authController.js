@@ -7,7 +7,7 @@ import nodemailer from 'nodemailer';
 
 const sendConformationMail =async (email,uniqueString)=>{
   const transport = nodemailer.createTransport({
-    service:"Gmail",
+    host:"smtp.gmail.com",
     port: 465,
     secure:true,
     auth:{
