@@ -242,9 +242,11 @@ export const getAllOrdersController = async (request, response) => {
   try {
     const orders = await paymentModel
       .find({})
-      .populate("products","-photo")
+      .populate({
+        path: 'products',
+        model: 'productModel'})
       .populate("buyer").sort({createdAt:"-1"})
-      response.status(201).send({success:true,orders});
+      return response.status(201).send({success:true,orders});
   } catch (error) {
     return response.status(400).send({
       success: false,
@@ -258,8 +260,9 @@ export const orderStatusController = async (request, response) => {
   try {
     const {orderId} = request.params; 
     const {status} = request.body;
-    const order = await paymentModel.findByIdAndUpdate(orderId,{status},{new:true})
-    response.status(200).send({success:true,order});
+    console.log(status);
+    const order = await paymentModel.findByIdAndUpdate(status,{orderId},{new:true})
+    return response.status(200).send({success:true,order,status});
   } catch (error) {
     return response.status(400).send({
       success: false,
