@@ -62,11 +62,6 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="*" element={<PageNotFound />} />
-        <Route path="/verify/:uniqueString" element={<EmailVerification />} />
-        <Route
-          path="/mail-verification-failure"
-          element={<MailVerificationFailure />}
-        />
       </Routes>
     </>
   );
