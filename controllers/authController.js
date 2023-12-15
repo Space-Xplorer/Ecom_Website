@@ -5,9 +5,11 @@ import userModel from "../models/userModel.js";
 import { UniqueString } from "unique-string-generator";
 import nodemailer from 'nodemailer';
 
-const sendConformationMail = (email,uniqueString)=>{
+const sendConformationMail =async (email,uniqueString)=>{
   const transport = nodemailer.createTransport({
-    service:"Gmail",
+    host:"smtp.gmail.com",
+    port: 465,
+    secure:true,
     auth:{
       user:process.env.MAILUSER,
       pass: process.env.MAILPASS
@@ -15,19 +17,23 @@ const sendConformationMail = (email,uniqueString)=>{
   });
 
   const sender = "Artisans of Telangana"
-  const href = `http://localhost:3000/verify/${uniqueString}`
+  const href = `https://good-teal-caterpillar-shoe.cyclic.cloud/verify/${uniqueString}`
   const mailOptions = {
     from: sender,
     to: email,
     subject: "Email Confirmation",
     html: `press <a href=${href}>Here</a> to verify your email. Team Artisans of Telangana with ❤️`
   };
-
-  transport.sendMail(mailOptions,(error,resp)=>{
-    if(error) console.log(error);
-    else console.log("Message Sent");
-  })
-
+  await new Promise((resolve, reject) => {
+    transport.sendMail(mailData, (err) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log("Message Sent");
+      }
+    });
+  });
 
 }
 
@@ -68,14 +74,14 @@ export const registerController = async (request, response) => {
       password: hashedPassword,
       answer,
       uniqueString,
-      isValid:0
+      isValid:1
     }).save();
+    // sendConformationMail(email,uniqueString);
     response.status(201).send({
       success: true,
       message: "User registered successfully",
       user,
     }); 
-    sendConformationMail(email,uniqueString);
   } catch (error) {
     console.log(error);
     response.status(500).send({
@@ -236,9 +242,11 @@ export const getAllOrdersController = async (request, response) => {
   try {
     const orders = await paymentModel
       .find({})
-      .populate("products","-photo")
+      .populate({
+        path: 'products',
+        model: 'productModel'})
       .populate("buyer").sort({createdAt:"-1"})
-      response.status(201).send({success:true,orders});
+      return response.status(201).send({success:true,orders});
   } catch (error) {
     return response.status(400).send({
       success: false,
@@ -252,8 +260,9 @@ export const orderStatusController = async (request, response) => {
   try {
     const {orderId} = request.params; 
     const {status} = request.body;
-    const order = await paymentModel.findByIdAndUpdate(orderId,{status},{new:true})
-    response.status(200).send({success:true,order});
+    console.log(status);
+    const order = await paymentModel.findByIdAndUpdate(status,{orderId},{new:true})
+    return response.status(200).send({success:true,order,status});
   } catch (error) {
     return response.status(400).send({
       success: false,
