@@ -25,6 +25,7 @@ const AdminOrders = () => {
     try {
       const { data } = await axios.get("/api/v1/auth/all-orders");
       setOrders(data.orders);
+      console.log(data.orders)
     } catch (error) {
       console.log(error);
     }
@@ -39,6 +40,7 @@ const AdminOrders = () => {
       const { data } = await axios.put(`/api/v1/auth/order-status/${orderId}`, {
         status: value,
       });
+      console.log(data);
       getOrders();
     } catch (error) {
       console.log(error);
@@ -76,7 +78,7 @@ const AdminOrders = () => {
                         <td className="text-center">
                           <Select
                             bordered={false}
-                            onChange={(val) => handleChange(o._id, val)}
+                            onChange={(val) => handleChange(val, o._id)}
                             defaultValue={o?.status}
                           >
                             {status.map((val, i) => (
@@ -88,7 +90,7 @@ const AdminOrders = () => {
                         </td>
                         <td className="text-center">{o?.buyer?.name}</td>
                         <td className="text-center">
-                          {moment(o?.createdAt).fromNow()}
+                          {moment([2021,10,10]).fromNow()}
                         </td>
                         <td className="text-center">
                           {o?.razorpay_payment_id ? "Success" : "Failed"}

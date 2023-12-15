@@ -9,7 +9,6 @@ import {
   getAllOrdersController,
   orderStatusController,
   getAllUsersController,
-  emailVerificationController,
 } from "../controllers/authController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 import userModel from "../models/userModel.js";
@@ -34,6 +33,5 @@ router.get('/orders',requireSignIn,getOrdersController);
 router.get('/all-orders', requireSignIn,isAdmin,getAllOrdersController);
 router.put('/order-status/:orderId', requireSignIn,isAdmin,orderStatusController);
 router.get('/users',getAllUsersController);
-router.get('/verify/:unqStr',emailVerificationController);
 
 export default router;

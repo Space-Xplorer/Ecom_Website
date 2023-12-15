@@ -23,6 +23,6 @@ let paymentSchema=mongoose.Schema(
         default:"Not processed",
         enum:["Not processed","Processing","Shipped","Delivered","Cancelled"]
     }
-},{timeStamps:true});
+},{timestamps:true});
 
 export default mongoose.model('paymentModel',paymentSchema); 

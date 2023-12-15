@@ -24,8 +24,6 @@ import Categories from "./pages/Categories";
 import CartPage from "./pages/CartPage";
 import AdminOrders from "./pages/Admin/AdminOrders";
 import NewHome from "./pages/NewHome";
-import MailVerificationFailure from "./pages/user/MailVerificationFailure";
-import EmailVerification from "./pages/EmailVerification";
 import NotAdmin from "./components/Layout/Routes/NotAdmin";
 
 function App() {
