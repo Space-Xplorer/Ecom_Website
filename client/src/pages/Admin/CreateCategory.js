@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from './../../components/Layout/Layout';
 import AdminMenu from './../../components/Layout/AdminMenu';
-import toast from "react-hot-toast";
 import axios from 'axios';
 import CategoryForm from '../../components/Form/CategoryForm';
 import { Modal } from 'antd';
@@ -20,17 +19,17 @@ function CreateCategory() {
     try {
       const { data } = await axios.put(`/api/v1/category/update-category/${selected.slug}`, { name: updateName });
       if (data.success) {
-        toast.success(data.message);
+        console.success(data.message);
         setSelected(null);
         setUpdateName('');
         setVisible(false);
         getAllCategory();
       } else {
-        toast.error(data.message);
+        console.error(data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong');
+      console.error('Something went wrong');
     }
   };
 
@@ -39,14 +38,14 @@ function CreateCategory() {
     try {
       const { data } = await axios.delete(`/api/v1/category/delete-category/${pslug}`);
       if (data.success) {
-        toast.success(data.message);
+        console.success(data.message);
         getAllCategory();
       } else {
-        toast.error(data.message);
+        console.error(data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong');
+      console.error('Something went wrong');
     }
   };
 
@@ -56,14 +55,14 @@ function CreateCategory() {
     try {
       const dataObj = await axios.post('/api/v1/category/create-category', { name });
       if (dataObj?.success) {
-        toast.success(`${dataObj.category.name} is created`);
+        console.success(`${dataObj.category.name} is created`);
         getAllCategory();
       } else {
-        toast.error(dataObj.message);
+        console.error(dataObj.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong in the input form");
+      console.error("Something went wrong in the input form");
     }
   };
 
@@ -76,7 +75,7 @@ function CreateCategory() {
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong in getting categories');
+      console.error('Something went wrong in getting categories');
     }
   };
 

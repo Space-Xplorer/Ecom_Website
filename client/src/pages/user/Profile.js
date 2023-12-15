@@ -3,7 +3,6 @@ import UserMenu from './../../components/Layout/UserMenu';
 import Layout from './../../components/Layout/Layout';
 import { useAuth } from '../../context/auth';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 
 function Profile() {
   const [auth, setAuth] = useAuth();
@@ -28,18 +27,17 @@ function Profile() {
     try {
       const { data } = await axios.put(`/api/v1/auth/update-user`, { name, email, password, phone, address });
       if (data?.error) {
-        toast.error(data.error);
+        console.error(data.error);
       } else {
         setAuth({ ...auth, user: data?.updatedUser });
         let ls = localStorage.getItem('auth');
         ls = JSON.parse(ls);
         ls.user = data.updatedUser;
         localStorage.setItem('auth', JSON.stringify(ls));
-        toast.success('User Updated Successfully');
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something Went Wrong");
+      console.error("Something Went Wrong");
     }
   };
 

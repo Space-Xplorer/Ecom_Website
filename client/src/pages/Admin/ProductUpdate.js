@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Layout from './../../components/Layout/Layout';
 import AdminMenu from './../../components/Layout/AdminMenu';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 import { Select } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import AdminLayout from '../../components/Layout/AdminLayout';
@@ -30,7 +29,7 @@ function ProductUpdate() {
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong in getting categories');
+      console.error('Something went wrong in getting categories');
     }
   }
 
@@ -51,7 +50,7 @@ function ProductUpdate() {
       setCategory(data.product[0].category);
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong');
+      console.error('Something went wrong');
     }
   }
 
@@ -75,13 +74,13 @@ function ProductUpdate() {
       const { data } = await axios.put(`/api/v1/product/update-product/${id}`, productData);
 
       if (data?.success) {
-        toast.error(data?.message);
+        console.error(data?.message);
       } else {
-        toast.success(data?.message);
+        console.success(data?.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong');
+      console.error('Something went wrong');
     }
   }
 
@@ -92,14 +91,14 @@ function ProductUpdate() {
       if (answer === false) return;
       const { data } = await axios.delete(`/api/v1/product/delete-product/${id}`);
       if (data?.success) {
-        toast.success(data.message);
+        console.success(data.message);
         navigate('/dashboard/admin/products');
       } else {
-        toast.error(data?.message);
+        console.error(data?.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong');
+      console.error('Something went wrong');
     }
   }
 

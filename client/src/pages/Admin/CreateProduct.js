@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Layout from './../../components/Layout/Layout';
 import AdminMenu from './../../components/Layout/AdminMenu';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '../../components/Layout/AdminLayout';
@@ -29,11 +28,11 @@ function CreateProduct() {
         setCategories(data?.categories);
       }
       else{
-        toast.error(data?.message);
+        console.error(data?.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong while getting categories');
+      console.error('Something went wrong while getting categories');
     }
   };
 
@@ -57,14 +56,14 @@ function CreateProduct() {
       const { data } = await axios.post('/api/v1/product/create-product', productData);
 
       if (data?.success) {
-        toast.success(data?.message);
+        console.success(data?.message);
       } else {
-        toast.success(data?.message);
+        console.success(data?.message);
         Navigate('/dashboard/admin/products');
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong');
+      console.error('Something went wrong');
     }
   };
 

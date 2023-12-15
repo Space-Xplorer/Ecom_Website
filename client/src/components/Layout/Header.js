@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
-import toast from "react-hot-toast";
 import useCategory from "../../hooks/useCategory";
 import { useCart } from "../../context/Cart";
 import { Badge } from "antd";
@@ -48,7 +47,6 @@ function Header() {
       token: "",
     });
     localStorage.removeItem("auth");
-    toast.success("Logout Successful");
   };
 
   return (

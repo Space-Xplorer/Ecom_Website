@@ -3,7 +3,6 @@ import Layout from '../components/Layout/Layout';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useCart } from '../context/Cart';
-import toast from 'react-hot-toast';
 
 function ProductDetails() {
   const params = useParams();
@@ -58,7 +57,6 @@ function ProductDetails() {
                 className="bg-green-500 hover:bg-green-600 text-white rounded-full px-6 py-2"
                 onClick={ () => {
                     setCart([...cart, product]);
-                    toast.success("Item Added To Cart");
                   } }
               >
                 Add to Cart

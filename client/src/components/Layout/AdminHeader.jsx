@@ -19,7 +19,6 @@ function AdminHeader() {
       token: "",
     });
     localStorage.removeItem("auth");
-    toast.success("Logout Successful");
   };
 
   return (

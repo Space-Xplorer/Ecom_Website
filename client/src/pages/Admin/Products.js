@@ -3,7 +3,6 @@ import AdminMenu from '../../components/Layout/AdminMenu';
 import Layout from './../../components/Layout/Layout';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 import AdminLayout from '../../components/Layout/AdminLayout';
 
 function Products() {
@@ -16,7 +15,7 @@ function Products() {
       setProducts(data.products);
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong');
+      console.error('Something went wrong');
     }
   }
 

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import React, { useState } from "react";
 import Layout from "./../../components/Layout/Layout";
 
@@ -19,13 +18,12 @@ function ForgotPassword() {
         answer,
       });
       if (res && res.data.success) {
-        toast.success(res.data && res.data.message);
         navigate("/login");
       } else {
-        toast.error(res.data.message);
+        console.error(res.data.message);
       }
     } catch (error) {
-      toast.error("Something Went Wrong");
+      console.error("Something Went Wrong");
     }
   };
 

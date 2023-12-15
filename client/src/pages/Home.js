@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
 import axios from "axios";
-import { toast } from "react-hot-toast";
 import { Radio, Select } from "antd";
 import { Prices } from "./../components/Price";
 import { Link, useNavigate } from "react-router-dom";
@@ -40,7 +39,6 @@ function Home() {
       setLoading(false);
       if (data?.message) {
         setProducts(data.products);
-        toast.success(data.message);
       }
     } catch (error) {
       setLoading(false);
