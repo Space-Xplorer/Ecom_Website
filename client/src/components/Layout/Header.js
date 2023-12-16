@@ -55,7 +55,9 @@ function Header() {
         <Link to="/" className="text-2xl font-bold text-brown flex">
           Artisans of <br/> Telangana
         </Link>
-        <div className="flex items-center space-x-6">
+        <div className="flex
+        
+         items-center space-x-4">
           <div className="relative">
             <form
               className="flex items-center"
