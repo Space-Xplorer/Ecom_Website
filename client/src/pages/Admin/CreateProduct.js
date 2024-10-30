@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Layout from './../../components/Layout/Layout';
 import AdminMenu from './../../components/Layout/AdminMenu';
+import AdminLayout from '../../components/Layout/AdminLayout';
 import axios from 'axios';
 import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import AdminLayout from '../../components/Layout/AdminLayout';
 
 const { Option } = Select;
 
 function CreateProduct() {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
   const [photo, setPhoto] = useState('');
@@ -19,20 +18,14 @@ function CreateProduct() {
   const [quantity, setQuantity] = useState('');
   const [shipping, setShipping] = useState('');
 
-  // Get all categories
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(`/api/v1/category/categories`);
-
       if (data?.success) {
         setCategories(data?.categories);
       }
-      else{
-        console.error(data?.message);
-      }
     } catch (error) {
       console.log(error);
-      console.error('Something went wrong while getting categories');
     }
   };
 
@@ -40,10 +33,8 @@ function CreateProduct() {
     getAllCategory();
   }, []);
 
-  // Create product function
   const handleCreate = async (e) => {
     e.preventDefault();
-
     try {
       const productData = new FormData();
       productData.append('name', name);
@@ -54,132 +45,116 @@ function CreateProduct() {
       productData.append('category', category);
       productData.append('shipping', shipping);
       const { data } = await axios.post('/api/v1/product/create-product', productData);
-
       if (data?.success) {
-        console.success(data?.message);
-      } else {
-        console.success(data?.message);
-        Navigate('/dashboard/admin/products');
+        navigate('/dashboard/admin/products');
       }
     } catch (error) {
       console.log(error);
-      console.error('Something went wrong');
     }
   };
 
   return (
-    <AdminLayout title={'Dashboard-create-product'}>
-      <div className="container mx-auto mt-3 p-3">
-        <div className="md:flex">
-          {/* Admin Menu */}
-          <div className="md:w-1/4">
+    <AdminLayout title="Create Product">
+      <div className="container mx-auto p-6">
+        <div className="md:flex gap-6">
+          
+          {/* Admin Menu with Purple-Gradient Background */}
+          <div className="md:w-1/4 bg-gradient-to-b from-purple-600 to-indigo-700 text-white rounded-lg shadow-lg p-6 transition duration-300 transform hover:scale-102">
             <AdminMenu />
           </div>
 
           {/* Create Product Form */}
-          <div className="md:w-3/4">
-            <h1 className="text-2xl font-semibold">Create Product</h1>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <Select
-                bordered={false}
-                placeholder="Select a Category"
-                size="large"
-                showSearch
-                className="w-full mb-4 px-3 py-2 bg-gray-100 border rounded-lg focus:ring focus:ring-blue-200"
-                onChange={(value) => {
-                  setCategory(value);
-                }}
-              >
-                {categories?.map((Obj) => {
-                  return (
-                    <Option key={Obj._id} value={Obj._id}>
-                      {Obj.name}
+          <div className="md:w-3/4 bg-white p-8 rounded-lg shadow-lg border-t-4 border-orange-500">
+            <h1 className="text-3xl font-semibold text-orange-600 mb-6">Create New Product</h1>
+            <form onSubmit={handleCreate}>
+              
+              {/* Category Selection */}
+              <div className="mb-4">
+                <Select
+                  bordered={false}
+                  placeholder="Select a Category"
+                  size="large"
+                  className="w-full px-4 py-2 bg-orange-50 border border-orange-300 rounded-md shadow-sm focus:ring focus:ring-purple-300"
+                  onChange={(value) => setCategory(value)}
+                >
+                  {categories.map((cat) => (
+                    <Option key={cat._id} value={cat._id}>
+                      {cat.name}
                     </Option>
-                  );
-                })}
-              </Select>
+                  ))}
+                </Select>
+              </div>
 
               {/* Photo Upload */}
               <div className="mb-4">
-                <label className="w-full h-48 flex items-center justify-center text-gray-400 border-dashed border-2 rounded-lg cursor-pointer hover:bg-gray-100">
+                <label className="w-full h-48 flex items-center justify-center bg-orange-50 border border-orange-300 border-dashed border-2 rounded-md cursor-pointer hover:bg-purple-100 transition">
                   {photo ? 'Change Photo' : 'Upload Photo'}
                   <input
                     type="file"
                     name="photo"
                     accept="image/*"
                     className="hidden"
-                    onChange={(e) => {
-                      setPhoto(e.target.files[0]);
-                    }}
+                    onChange={(e) => setPhoto(e.target.files[0])}
                   />
                 </label>
                 {photo && (
                   <img
                     src={URL.createObjectURL(photo)}
                     alt="product-photo"
-                    className="mt-2 mx-auto max-h-48"
+                    className="mt-4 mx-auto max-h-48 rounded-lg shadow-md"
                   />
                 )}
               </div>
 
-              {/* Name */}
+              {/* Input Fields */}
               <input
                 type="text"
                 value={name}
-                placeholder="Enter a Name"
-                className="w-full mb-4 px-3 py-2 bg-gray-100 border rounded-lg focus:ring focus:ring-blue-200"
+                placeholder="Product Name"
+                className="w-full mb-4 px-4 py-2 bg-orange-50 border border-orange-300 rounded-md shadow-sm focus:ring focus:ring-purple-300"
                 onChange={(e) => setName(e.target.value)}
               />
-
-              {/* Description */}
               <textarea
-                type="text"
                 value={description}
-                placeholder="Enter a Description"
-                className="w-full mb-4 px-3 py-2 bg-gray-100 border rounded-lg focus:ring focus:ring-blue-200 resize-none"
+                placeholder="Product Description"
+                className="w-full mb-4 px-4 py-2 bg-orange-50 border border-orange-300 rounded-md shadow-sm focus:ring focus:ring-purple-300 resize-none"
                 onChange={(e) => setDescription(e.target.value)}
               />
-
-              {/* Quantity */}
               <input
                 type="number"
                 value={quantity}
-                placeholder="Enter Quantity"
-                className="w-full mb-4 px-3 py-2 bg-gray-100 border rounded-lg focus:ring focus:ring-blue-200"
+                placeholder="Quantity"
+                className="w-full mb-4 px-4 py-2 bg-orange-50 border border-orange-300 rounded-md shadow-sm focus:ring focus:ring-purple-300"
                 onChange={(e) => setQuantity(e.target.value)}
               />
-
-              {/* Price */}
               <input
                 type="number"
                 value={price}
-                placeholder="Enter a Price"
-                className="w-full mb-4 px-3 py-2 bg-gray-100 border rounded-lg focus:ring focus:ring-blue-200"
+                placeholder="Price (₹)"
+                className="w-full mb-4 px-4 py-2 bg-orange-50 border border-orange-300 rounded-md shadow-sm focus:ring focus:ring-purple-300"
                 onChange={(e) => setPrice(e.target.value)}
               />
 
-              {/* Shipping */}
+              {/* Shipping Option */}
               <Select
                 bordered={false}
-                placeholder="Select Shipping"
+                placeholder="Shipping Available?"
                 size="large"
-                showSearch
-                className="w-full mb-4 px-3 py-2 bg-gray-100 border rounded-lg focus:ring focus:ring-blue-200"
-                onChange={(value) => {
-                  setShipping(value);
-                }}
+                className="w-full px-4 py-2 bg-orange-50 border border-orange-300 rounded-md shadow-sm focus:ring focus:ring-purple-300"
+                onChange={(value) => setShipping(value)}
               >
                 <Option value="0">No</Option>
                 <Option value="1">Yes</Option>
               </Select>
 
+              {/* Submit Button */}
               <button
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:ring focus:ring-blue-200"
-                onClick={handleCreate}
+                type="submit"
+                className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-full shadow-md focus:outline-none focus:ring focus:ring-orange-300 transition-all duration-300"
               >
                 CREATE PRODUCT
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>

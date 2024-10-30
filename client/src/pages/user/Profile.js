@@ -12,7 +12,7 @@ function Profile() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
-  // Get user data
+  // Load user data on component mount
   useEffect(() => {
     const { email, name, phone, address } = auth?.user;
     setName(name);
@@ -42,67 +42,73 @@ function Profile() {
   };
 
   return (
-    <Layout title={'Dashboard-profile'}>
-      <div className='container mx-auto p-4'>
-        <div className='md:flex'>
+    <Layout title={'Dashboard - Profile'}>
+      <div className="container mx-auto p-6 min-h-screen bg-gray-100">
+        <div className="md:flex gap-8">
+          
           {/* User Menu (Sidebar) */}
-          <div className='md:w-1/4'>
+          <div className="md:w-1/4 bg-gradient-to-b from-amber-500 to-orange-600 text-white rounded-lg shadow-lg p-6">
             <UserMenu />
           </div>
 
           {/* Profile Form */}
-          <div className='md:w-3/4'>
-            <div className="bg-white rounded-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">USER PROFILE</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="mb-4">
+          <div className="md:w-3/4">
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h2 className="text-3xl font-semibold text-orange-600 mb-6">
+                User Profile
+              </h2>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition duration-200"
                     placeholder="Enter Your Name"
                     autoFocus
                   />
                 </div>
-                <div className="mb-4">
+                <div>
                   <input
                     type="email"
                     value={email}
-                    className="w-full p-2 border border-gray-300 rounded-lg"
+                    className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none"
                     placeholder="Enter Your Email"
                     disabled
                   />
                 </div>
-                <div className="mb-4">
+                <div>
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition duration-200"
                     placeholder="Enter Your Password"
                   />
                 </div>
-                <div className="mb-4">
+                <div>
                   <input
                     type="text"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition duration-200"
                     placeholder="Enter Your Phone"
                   />
                 </div>
-                <div className="mb-4">
+                <div>
                   <input
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition duration-200"
                     placeholder="Enter Your Address"
                   />
                 </div>
-                <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-lg">
-                  UPDATE
+                <button
+                  type="submit"
+                  className="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition duration-200"
+                >
+                  Update Profile
                 </button>
               </form>
             </div>

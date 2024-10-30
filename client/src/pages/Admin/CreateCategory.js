@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Layout from './../../components/Layout/Layout';
 import AdminMenu from './../../components/Layout/AdminMenu';
+import AdminLayout from '../../components/Layout/AdminLayout';
 import axios from 'axios';
 import CategoryForm from '../../components/Form/CategoryForm';
 import { Modal } from 'antd';
-import AdminLayout from '../../components/Layout/AdminLayout';
 
 function CreateCategory() {
   const [categories, setCategories] = useState([]);
@@ -19,33 +18,23 @@ function CreateCategory() {
     try {
       const { data } = await axios.put(`/api/v1/category/update-category/${selected.slug}`, { name: updateName });
       if (data.success) {
-        console.success(data.message);
         setSelected(null);
         setUpdateName('');
         setVisible(false);
         getAllCategory();
-      } else {
-        console.error(data.message);
       }
     } catch (error) {
       console.log(error);
-      console.error('Something went wrong');
     }
   };
 
   // Delete category
   const handleDelete = async (pslug) => {
     try {
-      const { data } = await axios.delete(`/api/v1/category/delete-category/${pslug}`);
-      if (data.success) {
-        console.success(data.message);
-        getAllCategory();
-      } else {
-        console.error(data.message);
-      }
+      await axios.delete(`/api/v1/category/delete-category/${pslug}`);
+      getAllCategory();
     } catch (error) {
       console.log(error);
-      console.error('Something went wrong');
     }
   };
 
@@ -53,16 +42,11 @@ function CreateCategory() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const dataObj = await axios.post('/api/v1/category/create-category', { name });
-      if (dataObj?.success) {
-        console.success(`${dataObj.category.name} is created`);
-        getAllCategory();
-      } else {
-        console.error(dataObj.message);
-      }
+      await axios.post('/api/v1/category/create-category', { name });
+      setName("");
+      getAllCategory();
     } catch (error) {
       console.log(error);
-      console.error("Something went wrong in the input form");
     }
   };
 
@@ -70,12 +54,9 @@ function CreateCategory() {
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(`/api/v1/category/categories`);
-      if (data?.success) {
-        setCategories(data?.categories);
-      }
+      setCategories(data?.categories || []);
     } catch (error) {
       console.log(error);
-      console.error('Something went wrong in getting categories');
     }
   };
 
@@ -84,32 +65,40 @@ function CreateCategory() {
   }, []);
 
   return (
-    <AdminLayout title={'Dashboard-create-category'}>
-      <div className='container mx-auto mt-3 p-3'>
-        <div className='flex flex-wrap'>
-          <div className='w-full md:w-1/4'>
+    <AdminLayout title={'Dashboard - Create Category'}>
+      <div className="container mx-auto p-6">
+        <div className="md:flex gap-6">
+          
+          {/* Admin Menu */}
+          <div className="md:w-1/4 bg-gradient-to-b from-purple-600 to-indigo-700 text-white rounded-lg shadow-lg p-6 h-full min-h-full">
             <AdminMenu />
           </div>
-          <div className='w-full md:w-3/4'>
-            <h1 className='text-2xl font-semibold'>Manage Category</h1>
-            <div className='p-3 md:w-1/2'>
+
+          {/* Category Management Section */}
+          <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-lg border-t-4 border-orange-500">
+            <h1 className="text-4xl font-semibold text-orange-500 mb-8">Manage Categories</h1>
+            
+            {/* Category Form */}
+            <div className="bg-orange-50 p-4 rounded-lg shadow-md mb-8">
               <CategoryForm handleSubmit={handleSubmit} value={name} setValue={setName} />
             </div>
-            <div className='w-full overflow-x-auto'>
-              <table className='table-auto w-full border-collapse border border-gray-400'>
+            
+            {/* Categories Table */}
+            <div className="w-full overflow-x-auto">
+              <table className="w-full border border-gray-200 text-left rounded-lg shadow-sm">
                 <thead>
-                  <tr className='bg-gray-200'>
-                    <th className='px-4 py-2'>Name</th>
-                    <th className='px-4 py-2'>Actions</th>
+                  <tr className="bg-orange-400 text-white">
+                    <th className="px-4 py-3 font-semibold">Name</th>
+                    <th className="px-4 py-3 font-semibold">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {categories?.map((Obj, ind) => (
-                    <tr key={ind}>
-                      <td className='border px-4 py-2'>{Obj.name}</td>
-                      <td className='border px-4 py-2'>
+                  {categories.map((Obj, ind) => (
+                    <tr key={ind} className="hover:bg-orange-100">
+                      <td className="border-t border-orange-300 px-4 py-3">{Obj.name}</td>
+                      <td className="border-t border-orange-300 px-4 py-3">
                         <button
-                          className='bg-blue-500 hover:bg-blue-600 text-white rounded-full px-3 py-1 mr-2'
+                          className="bg-orange-500 hover:bg-orange-600 text-white rounded-md px-3 py-1 mr-2 transition duration-200"
                           onClick={() => {
                             setVisible(true);
                             setUpdateName(Obj.name);
@@ -119,7 +108,7 @@ function CreateCategory() {
                           Edit
                         </button>
                         <button
-                          className='bg-red-500 hover:bg-red-600 text-white rounded-full px-3 py-1'
+                          className="bg-red-500 hover:bg-red-600 text-white rounded-md px-3 py-1 transition duration-200"
                           onClick={() => handleDelete(Obj.slug)}
                         >
                           Delete
@@ -130,7 +119,15 @@ function CreateCategory() {
                 </tbody>
               </table>
             </div>
-            <Modal onCancel={() => setVisible(false)} footer={null} open={visible}>
+
+            {/* Update Category Modal */}
+            <Modal
+              onCancel={() => setVisible(false)}
+              footer={null}
+              open={visible}
+              title="Update Category"
+              className="rounded-lg shadow-lg"
+            >
               <CategoryForm value={updateName} setValue={setUpdateName} handleSubmit={handleUpdate} />
             </Modal>
           </div>

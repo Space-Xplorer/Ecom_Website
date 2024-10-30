@@ -10,8 +10,6 @@ function Footer() {
           <Link to='/about' className='hover:underline'>About</Link>
           {' | '}
           <Link to='/contact' className='hover:underline'>Contact</Link>
-          {' | '}
-          <Link to='/policy' className='hover:underline'>Privacy Policy</Link>
         </p>
       </div>
     </div>

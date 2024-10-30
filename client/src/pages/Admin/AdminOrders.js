@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from "react";
 import AdminMenu from "../../components/Layout/AdminMenu";
-import Layout from "./../../components/Layout/Layout";
+import AdminLayout from "../../components/Layout/AdminLayout";
 import axios from "axios";
 import { useAuth } from "../../context/auth";
 import moment from "moment";
 import { Select } from "antd";
-import AdminLayout from "../../components/Layout/AdminLayout";
 
 const { Option } = Select;
 
 const AdminOrders = () => {
-  const [status, setStatus] = useState([
+  const [status] = useState([
     "Not processed",
     "Processing",
     "Shipped",
     "Delivered",
     "Cancelled",
   ]);
-  const [changeStatus, setChangeStatus] = useState("");
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
     try {
       const { data } = await axios.get("/api/v1/auth/all-orders");
       setOrders(data.orders);
-      console.log(data.orders)
     } catch (error) {
       console.log(error);
     }
@@ -37,10 +34,9 @@ const AdminOrders = () => {
 
   const handleChange = async (value, orderId) => {
     try {
-      const { data } = await axios.put(`/api/v1/auth/order-status/${orderId}`, {
+      await axios.put(`/api/v1/auth/order-status/${orderId}`, {
         status: value,
       });
-      console.log(data);
       getOrders();
     } catch (error) {
       console.log(error);
@@ -49,81 +45,93 @@ const AdminOrders = () => {
 
   return (
     <AdminLayout title={"All Orders Data"}>
-      <div className="container mx-auto mt-3 p-3">
-        <div className="md:flex md:flex-wrap">
+      <div className="container mx-auto p-6">
+        <div className="md:flex gap-6">
+          
           {/* Admin Menu */}
           <div className="md:w-1/4">
-            <AdminMenu />
+            <div className="bg-gradient-to-b from-purple-600 to-indigo-700 text-white rounded-lg shadow-lg p-6">
+              <AdminMenu />
+            </div>
           </div>
-          {/* All Orders */}
+
+          {/* Orders Section */}
           <div className="md:w-3/4">
-            <h1 className="text-3xl font-semibold mb-6 text-center">Orders</h1>
-            {orders?.map((o, i) => {
-              return (
-                <div className="border shadow-lg mb-4" key={i}>
-                  <table className="table w-full">
-                    <thead>
-                      <tr>
-                        <th className="py-2">#</th>
-                        <th className="py-2">Status</th>
-                        <th className="py-2">Buyer</th>
-                        <th className="py-2">Date</th>
-                        <th className="py-2">Payment</th>
-                        <th className="py-2">Quantity</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="text-center">{i + 1}</td>
-                        <td className="text-center">
-                          <Select
-                            bordered={false}
-                            onChange={(val) => handleChange(val, o._id)}
-                            defaultValue={o?.status}
-                          >
-                            {status.map((val, i) => (
-                              <Option key={i} value={val}>
-                                {val}
-                              </Option>
-                            ))}
-                          </Select>
-                        </td>
-                        <td className="text-center">{o?.buyer?.name}</td>
-                        <td className="text-center">
-                          {moment([2021,10,10]).fromNow()}
-                        </td>
-                        <td className="text-center">
-                          {o?.razorpay_payment_id ? "Success" : "Failed"}
-                        </td>
-                        <td className="text-center">{o?.products.length}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div>
-                    {o?.products.map((Obj, index) => (
-                      <div key={index} className="row mb-2 p-3 card flex-row">
-                        <div className="col-md-4">
-                          <img
-                            src={`/api/v1/product/get-photo/${Obj._id}`}
-                            className="card-img-top"
-                            alt={Obj.name}
-                          />
-                        </div>
-                        <div className="col-md-8">
-                          <p className="font-semibold text-lg">{Obj.name}</p>
-                          <p className="text-gray-700">
-                            {Obj.description.substr(10)}
-                          </p>
-                          <p className="text-green-600 font-semibold">
-                            {Obj.price}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+            <h1 className="text-4xl font-bold mb-8 text-center text-orange-600">
+              Orders Management
+            </h1>
+            
+            {orders?.map((order, i) => (
+              <div key={i} className="bg-white rounded-lg shadow-md mb-8 p-6 border-t-4 border-orange-500">
+                
+                {/* Order Header */}
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-2xl font-semibold text-gray-800">
+                    Order #{i + 1}
+                  </h2>
+                  <div className="text-lg font-semibold text-gray-600">
+                    Status:{" "}
+                    <Select
+                      value={order.status}
+                      onChange={(val) => handleChange(val, order._id)}
+                      className="text-orange-600 border-none"
+                    >
+                      {status.map((stat, index) => (
+                        <Option key={index} value={stat}>
+                          {stat}
+                        </Option>
+                      ))}
+                    </Select>
                   </div>
                 </div>
-              );
-            })}
+
+                {/* Order Details */}
+                <table className="w-full text-gray-700 mb-4">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="py-2 px-4 text-left">Buyer</th>
+                      <th className="py-2 px-4 text-left">Order Date</th>
+                      <th className="py-2 px-4 text-left">Payment Status</th>
+                      <th className="py-2 px-4 text-left">Total Items</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="py-2 px-4 text-center">{order.buyer?.name}</td>
+                      <td className="py-2 px-4 text-center">{moment(order.createdAt).fromNow()}</td>
+                      <td className="py-2 px-4 text-center">
+                        {order.razorpay_payment_id ? "Success" : "Failed"}
+                      </td>
+                      <td className="py-2 px-4 text-center">{order.products.length}</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                {/* Product Details */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {order.products.map((product, index) => (
+                    <div key={index} className="flex bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                      <img
+                        src={`/api/v1/product/get-photo/${product._id}`}
+                        alt={product.name}
+                        className="w-20 h-20 object-cover rounded-md"
+                      />
+                      <div className="ml-4">
+                        <h3 className="text-lg font-semibold text-gray-800">
+                          {product.name}
+                        </h3>
+                        <p className="text-gray-600 mt-1">
+                          {product.description.substring(0, 50)}...
+                        </p>
+                        <p className="text-green-600 font-semibold mt-2">
+                          ₹ {product.price}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import userModel from '../models/userModel.js'
 
 export const requireSignIn =async (request,response,next)=>{
     try {
+        console.log(request)
         const decode = await JWT.verify(request.headers.authorization,process.env.JWT_KEY)
         request.user = decode
         next()
