@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "type": "module",
+  "proxy": "http://localhost:8080",
   "scripts": {
     "build": "react-scripts build",
     "start": "node server.js",
