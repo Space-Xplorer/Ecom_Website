@@ -35,9 +35,9 @@ const __dirname = path.dirname(__filename) //here is important thing - no static
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/category',categoryRoute)
 app.use('/api/v1/product',productRoute)
-app.use(express.static(path.join(__dirname,'./client/build')))
+app.use(express.static(path.join(__dirname,'../client/build')))
 app.use("*",(request,response)=>{
-  response.sendFile(path.join(__dirname,'./client/build/index.html'))
+  response.sendFile(path.join(__dirname,'../client/build/index.html'))
 })
 
 
