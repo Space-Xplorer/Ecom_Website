@@ -26,7 +26,7 @@ function Login() {
         if(res.data.user.role === 1) navigate('/admin-panel');
         else navigate(location.state || "/");
       } else {
-        toast.error("email or password is incorrect. Please retry again");
+        toast.error("Email or password is incorrect. Please try again");
       }
     } catch (error) {
       console.log(error);
