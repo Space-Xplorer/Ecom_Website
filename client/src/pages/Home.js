@@ -106,6 +106,12 @@ function Home() {
     setIsOpen(!isOpen);
   };
 
+  // Add product to cart
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+    localStorage.setItem("cart", JSON.stringify([...cart, product]));
+  };
+
   return (
     <Layout title={"All Products - Best Offers"}>
       <div className="container mx-auto p-6 bg-gray-50 rounded-lg shadow-lg">
@@ -189,32 +195,37 @@ function Home() {
             <h1 className="text-center text-3xl font-bold text-gray-800 my-8">
               All Products
             </h1>
-            <div className="flex flex-wrap justify-center gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {products?.map((Obj, i) => (
-                <Link
-                  to={`/product/${Obj.slug}`}
-                  className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 p-4 transition-transform transform hover:scale-105"
+                <div
                   key={i}
+                  className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden h-full flex flex-col justify-between"
                 >
-                  <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow h-full flex flex-col">
+                  <Link to={`/product/${Obj.slug}`}>
                     <img
                       src={`/api/v1/product/get-photo/${Obj._id}`}
                       className="w-full h-48 object-cover"
                       alt={Obj.name}
                     />
-                    <div className="p-4 flex flex-col justify-between flex-grow">
-                      <h5 className="text-lg font-semibold text-gray-800">
+                    <div className="p-4">
+                      <h5 className="text-lg font-semibold text-gray-800 mb-2">
                         {Obj.name}
                       </h5>
-                      <p className="text-gray-600 mt-2">
+                      <p className="text-gray-600 mb-4">
                         {Obj.description.substring(0, 30)}...
                       </p>
-                      <p className="font-bold text-lg text-orange-500 mt-4">
+                      <p className="font-bold text-lg text-orange-500">
                         ₹ {Obj.price}
                       </p>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                  <button
+                    className="bg-green-500 hover:bg-green-600 text-white rounded-full px-4 py-2 m-4"
+                    onClick={() => addToCart(Obj)}
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               ))}
             </div>
 
