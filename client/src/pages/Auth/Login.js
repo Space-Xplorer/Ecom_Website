@@ -27,7 +27,6 @@ function Login() {
         else navigate(location.state || "/");
       } else {
         toast.error("email or password is incorrect. Please retry again");
-        console.error(res.data.message);
       }
     } catch (error) {
       console.log(error);
