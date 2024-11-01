@@ -3,7 +3,8 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import React, { useState } from "react";
 import Layout from "./../../components/Layout/Layout";
 import { useAuth } from "../../context/auth";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +26,7 @@ function Login() {
         if(res.data.user.role === 1) navigate('/admin-panel');
         else navigate(location.state || "/");
       } else {
+        toast.error("email or password is incorrect. Please retry again");
         console.error(res.data.message);
       }
     } catch (error) {
@@ -35,6 +37,14 @@ function Login() {
 
   return (
     <Layout title="Login - Ecommerce App">
+      <ToastContainer
+      position="top-center"
+      autoClose={3000}
+      closeOnClick
+      pauseOnHover
+      draggable
+      limit={1}                 
+      style={{ width: "450px", fontSize: "1rem" }}  />
       <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
         <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
           <h2 className="text-3xl font-semibold mb-6 text-center text-indigo-700">Welcome Back!</h2>
