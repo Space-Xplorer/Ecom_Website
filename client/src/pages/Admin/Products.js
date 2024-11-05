@@ -11,6 +11,7 @@ function Products() {
   const getAllProducts = async () => {
     try {
       const { data } = await axios.get('/api/v1/product/products');
+      console.log(data)
       setProducts(data.products);
     } catch (error) {
       console.log(error);
@@ -36,7 +37,7 @@ function Products() {
             <h1 className="text-4xl font-bold text-center text-orange-600 mb-8">All Products</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {products.map((product) => (
-                <Link key={product._id} to={`/dashboard/admin/product/${product.slug}`}>
+                <Link key={product._id} to={`/admin-panel/product-update/${product.slug}`}>
                   <div className="bg-white shadow-md rounded-lg border border-orange-300 overflow-hidden hover:scale-105 transition-shadow duration-300 h-96 flex flex-col">
                     
                     {/* Product Image */}

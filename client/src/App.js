@@ -26,6 +26,7 @@ import AdminOrders from "./pages/Admin/AdminOrders";
 import NewHome from "./pages/NewHome";
 import NotAdmin from "./components/Layout/Routes/NotAdmin";
 
+
 function App() {
   return (
     <>
@@ -52,6 +53,7 @@ function App() {
           <Route path="products" element={<Products />} />
           <Route path="users" element={<Users />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="product-update/:slug" element={<ProductUpdate/>} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
