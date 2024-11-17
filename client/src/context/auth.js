@@ -17,7 +17,7 @@ const AuthProvider=({children})=>{
             const parseData=JSON.parse(data)
             axios.defaults.headers.common['Authorization']=parseData?.token
             setAuth({
-                ...auth,
+                ...auth,    
                 user:parseData.user,
                 token:parseData.token
             })
@@ -33,6 +33,6 @@ const AuthProvider=({children})=>{
 
 
 //custom hook
-const useAuth = ()=>useContext(AuthContext)
+    const useAuth = ()=>useContext(AuthContext)
 
 export {useAuth,AuthProvider}

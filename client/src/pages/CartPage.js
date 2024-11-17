@@ -65,7 +65,6 @@ function CartPage() {
         key: Obj.data.key,
         amount: data.order.amount,
         currency: 'INR',
-        name: 'Pranav',
         description: 'E-commerce Payment',
         order_id: data.order.id,
         handler: function (response) {
@@ -96,7 +95,7 @@ function CartPage() {
         theme: {
           color: '#FFA500',
         },
-      };
+      } ;
       const razor = new window.Razorpay(options);
       razor.open();
     } catch (error) {

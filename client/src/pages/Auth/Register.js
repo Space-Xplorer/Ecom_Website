@@ -110,7 +110,10 @@ const Register = () => {
               <input
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value)
+                  console.log(e)
+                }}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition duration-200"
                 placeholder="Enter Your Name"
                 required
@@ -142,7 +145,7 @@ const Register = () => {
             </div>
             <div className="mb-5">
               <input
-                type="text"
+                type="number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition duration-200"

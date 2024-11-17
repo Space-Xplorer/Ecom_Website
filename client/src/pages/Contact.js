@@ -23,10 +23,10 @@ const Contact = () => {
           </p>
           <ul className="list-disc pl-6 mt-4">
             <li className="flex items-center mb-2">
-              <FaEnvelope className="mr-2" /> Email: ArtisanVista_support@gmail.com
+              <FaEnvelope className="mr-2" /> Email: artisansoftelangana@gmail.com
             </li>
             <li className="flex items-center mb-2">
-              <FaPhoneAlt className="mr-2" /> Phone: 012-3456789
+              <FaPhoneAlt className="mr-2" /> Phone: 9347805418
             </li>
             <li className="flex items-center">
               <FaRegLifeRing className="mr-2" /> Support: 1800-0000-0000 (toll-free)

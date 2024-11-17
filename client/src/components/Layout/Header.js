@@ -45,7 +45,7 @@ function Header() {
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-3xl font-bold text-white">
-          Artisans of <span className="block">Telangana</span>
+        Artisans of <span className="block">Telangana</span>  
         </Link>
 
         {/* Search Bar */}

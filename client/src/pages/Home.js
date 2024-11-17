@@ -18,7 +18,7 @@ function Home() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // Sidebar toggle state
+  const [isOpen, setIsOpen] = useState(false); 
 
   // Fetch total number of products
   const getTotal = async () => {
@@ -196,9 +196,9 @@ function Home() {
               All Products
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {products?.map((Obj, i) => (
+              {products?.map((Obj) => (
                 <div
-                  key={i}
+                  key={Obj._id}
                   className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden h-full flex flex-col justify-between"
                 >
                   <Link to={`/product/${Obj.slug}`}>

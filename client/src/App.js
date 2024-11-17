@@ -38,6 +38,7 @@ function App() {
           <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/cart" element={<CartPage />} />
+          
         </Route>
         {/* <Route path='/category/:slug' element={<CategoryProducts/>} /> */}
         <Route path="/dashboard" element={<PrivateRoute />}>

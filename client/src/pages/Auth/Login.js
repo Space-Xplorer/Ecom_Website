@@ -22,6 +22,7 @@ function Login() {
           user: res.data.user,
           token: res.data.token,
         });
+        
         localStorage.setItem('auth', JSON.stringify(res.data));
         if(res.data.user.role === 1) navigate('/admin-panel');
         else navigate(location.state || "/");
