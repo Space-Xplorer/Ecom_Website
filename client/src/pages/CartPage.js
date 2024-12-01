@@ -19,8 +19,10 @@ function CartPage() {
     } else {
       acc.push({ ...item, quantity: 1 });
     }
+   
     return acc;
   }, []);
+  console.log(groupedCart);
 
   const totalPrice = () => {
     try {
@@ -58,7 +60,7 @@ function CartPage() {
 
   const fetchData = async (amount) => {
     try {
-      if (!auth?.token) navigate('/login');
+      if (!auth?.token) navigate('/login', { state: '/cart' })
       const Obj = await axios.get('/api/v1/product/getkey');
       const { data } = await axios.post(`/api/v1/product/razorpay/payment`, { amount });
       const options = {
@@ -76,6 +78,7 @@ function CartPage() {
               razorpay_order_id,
               razorpay_signature,
             });
+            console.log(groupedCart);
             localStorage.removeItem('cart');
             setCart([]);
             toast.success('Payment Successful');

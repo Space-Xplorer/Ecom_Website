@@ -4,6 +4,7 @@ import UserMenu from './../../components/Layout/UserMenu';
 import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 function Orders() {
   const [auth] = useAuth();
@@ -35,52 +36,62 @@ function Orders() {
           {/* Orders List */}
           <div className="md:w-3/4">
             <h1 className="text-3xl font-semibold text-orange-600 mb-8 text-center">Your Orders</h1>
-            {orders?.map((order, i) => (
-              <div className="bg-white rounded-lg shadow-md mb-8 p-6" key={i}>
-                <table className="w-full mb-4">
-                  <thead>
-                    <tr className="border-b text-gray-700">
-                      <th className="py-2">#</th>
-                      <th className="py-2">Status</th>
-                      <th className="py-2">Buyer</th>
-                      <th className="py-2">Date</th>
-                      <th className="py-2">Payment</th>
-                      <th className="py-2">Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="text-center text-gray-600">
-                      <td>{i + 1}</td>
-                      <td>{order?.status}</td>
-                      <td>{order?.buyer?.name}</td>
-                      <td>{moment(order?.createdAt).fromNow()}</td>
-                      <td>{order?.razorpay_payment_id ? 'Success' : 'Failed'}</td>
-                      <td>{order?.products.length}</td>
-                    </tr>
-                  </tbody>
-                </table>
+            {orders
+    ?.slice() // Create a shallow copy to prevent mutation of the original array
+    .reverse() // Reverse the copy
+    .map((order, i) => (
+      <div className="bg-white rounded-lg shadow-md mb-8 p-6" key={i}>
+        <table className="w-full mb-4">
+          <thead>
+            <tr className="border-b text-gray-700">
+              <th className="py-2">#</th>
+              <th className="py-2">Status</th>
+              <th className="py-2">Buyer</th>
+              <th className="py-2">Date</th>
+              <th className="py-2">Payment</th>
+              <th className="py-2">Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="text-center text-gray-600">
+              <td>{i + 1}</td>
+              <td>{order?.status}</td>
+              <td>{order?.buyer?.name}</td>
+              <td>{moment(order?.createdAt).fromNow()}</td>
+              <td>{order?.razorpay_payment_id ? 'Success' : 'Failed'}</td>
+              <td>{order?.products.length}</td>
+            </tr>
+          </tbody>
+        </table>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {order?.products.map((product, index) => (
-                    <div
-                      key={index}
-                      className="flex bg-gray-50 rounded-lg shadow-sm p-4 hover:shadow-lg transition-shadow duration-200"
-                    >
-                      <div className="w-1/3">
-                        <img
-                          src={`/api/v1/product/get-photo/${product._id}`}
-                          className="w-full h-32 object-cover rounded-lg"
-                          alt={product.name}
-                        />
-                      </div>
-                      <div className="ml-4 flex-1">
-                        <p className="text-lg font-semibold text-gray-800">{product.name}</p>
-                        <p className="text-gray-600 mt-2">{product.description.substring(0, 100)}...</p>
-                        <p className="text-green-600 font-semibold mt-4">₹ {product.price}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+  {order?.products
+    ?.slice() // Create a shallow copy to avoid mutating the original array
+    .reverse() // Reverse the copy
+    .map((product, index) => (
+      <div
+        to='/product._id'
+        key={index}
+        className="flex bg-gray-50 rounded-lg shadow-sm p-4 hover:shadow-lg transition-shadow duration-200"
+      >
+        <Link to={`/product/${product.slug}`}>
+        <div>
+          <img
+            src={`/api/v1/product/get-photo/${product._id}`}
+            className="w-full h-32 object-cover rounded-lg"
+            alt={product.name}
+          />
+        </div>
+        <div className="ml-4 flex-1">
+          <p className="text-lg font-semibold text-gray-800">{product.name}</p>
+          <p className="text-gray-600 mt-2">{product.description.substring(0, 100)}...</p>
+          <p className="text-green-600 font-semibold mt-4">₹ {product.price}</p>
+        </div>
+        </Link>
+      </div>
+    ))}
+</div>
+
               </div>
             ))}
           </div>

@@ -129,7 +129,6 @@ export const loginController = async (request, response) => {
         phone:user.phone,
         address:user.address,
         role:user.role,
-        password:password,
       },
       token,
     });

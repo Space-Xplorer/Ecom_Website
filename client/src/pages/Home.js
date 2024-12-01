@@ -19,7 +19,6 @@ function Home() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false); 
-
   // Fetch total number of products
   const getTotal = async () => {
     try {
