@@ -35,7 +35,7 @@ function NewHome() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-          ></motion.div>
+          ></motion.div>  
         </section>
 
         {/* About Section */}
@@ -91,7 +91,7 @@ function NewHome() {
               <img
                 src="https://www.theweavesart.com/cdn/shop/files/PinwheelPatternPochampallyIkatSilkSaree_800x.png?v=1685524071"
                 alt="Pochampally Ikat"
-                className="rounded-lg shadow-md mb-4"
+                className="rounded-lg shadow-md mb-4 h-60 w-full"
               />
               <h3 className="font-bold text-lg text-center text-gray-800 mb-2">
                 Pochampally Ikat
@@ -110,12 +110,12 @@ function NewHome() {
               whileHover={{ scale: 1.05 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
             >
               <img
                 src="https://azlqkobuum.cloudimg.io/v7/https://seerat.shop/wp-content/uploads/2021/03/Whitagram-Image-26-min-1.jpg"
                 alt="Gadwal Sarees"
-                className="rounded-lg shadow-md mb-4"
+                className="rounded-lg shadow-md mb-2 h-60 w-full"
               />
               <h3 className="font-bold text-lg text-center text-gray-800 mb-2">
                 Gadwal Sarees
@@ -138,7 +138,7 @@ function NewHome() {
               <img
                 src="https://2.bp.blogspot.com/-Npu6yceQJTE/WdFpS2B1JwI/AAAAAAAAC2g/lAr8sH9a4OIYVccXQXID_o-H1vcSDNdYwCLcBGAs/s1600/gollabhama_sarees.jpg"
                 alt="Gollabhama Sarees"
-                className="rounded-lg shadow-md mb-4"
+                className="rounded-lg shadow-md mb-4 h-60 w-full"
               />
               <h3 className="font-bold text-lg text-center text-gray-800 mb-2">
                 Gollabhama Sarees
